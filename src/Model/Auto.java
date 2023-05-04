@@ -1,7 +1,6 @@
 package Model;
 
-
-import java.io.Serializable;
+import java.io.*;
 import java.util.Arrays;
 
 public class Auto implements Serializable
@@ -10,8 +9,7 @@ public class Auto implements Serializable
     private double basePrice;
     private OptionSet[] optS;
 
-    Auto(String name, double basePrice, int size)
-    {
+    Auto(String name, double basePrice, int size) throws IOException {
         this.name = name;
         this.basePrice = basePrice;
         if(size == 0){
@@ -187,6 +185,41 @@ public class Auto implements Serializable
             System.out.println("No such Option with that name");
         }
     }
+////////////////// PRINT FUNCTIONS ////////////////////////////////////////////////////////////////////////////////////
+
+    public void printAutoName(){
+        System.out.println(getName());
+    }
+    public void printAutoPrice(){
+        System.out.println(getBasePrice());
+    }
+    public void printOptionSets(){
+        System.out.println(getOptS());
+    }
+    public void printOneOptionSet(String name){
+        System.out.println(getOneOptionSet(name));
+    }
+    public void printOneOption(int x, String name){
+        for (OptionSet i : optS)
+        {
+            if(i.getOptionSetName().equals(name))
+            {
+                i.printOneOption(x);
+            }
+        }
+    }
+    public void printData(){
+        StringBuffer sb = new StringBuffer();
+        sb.append("Name: ");
+        sb.append(getName());
+        sb.append(", Base price: ");
+        sb.append(getBasePrice());
+        sb.append(", OptionSet (Array): ");
+        sb.append(Arrays.toString(getOptS()));
+    }
+
+
+
 
 ////////////////// GETTERS AND SETTERS ////////////////////////////////////////////////////////////////////////////////
     public String getName() {

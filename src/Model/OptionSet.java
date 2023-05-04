@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.*;
 import java.util.Arrays;
 
-public class OptionSet
+public class OptionSet implements Serializable
 {
     private String OptionSetName;
     private Options[] opt;
@@ -266,7 +267,7 @@ public class OptionSet
             count++;
         }
         if(!found){
-            System.out.println("No such Option, getOneOption failed");
+            System.out.println("No such Option, setOneOption failed");
         }
     }
 
@@ -276,7 +277,7 @@ public class OptionSet
 
 ///////////////////////////////////////New Inner Class/////////////////////////////////////////////////////////////////
 
-    protected class Options
+    protected class Options implements Serializable
     {
         private String OptName;
         private double OptPrice;

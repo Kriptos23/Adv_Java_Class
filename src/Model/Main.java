@@ -1,11 +1,13 @@
 package Model;
 
+import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 
-public class Main
+
+public class Main implements Serializable
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         System.out.println("Thank you for deciding to buy Ford's Focus Wagon ZTW \nYou have following options " +
                 "for your car:");
 
@@ -121,6 +123,20 @@ public class Main
 
 //        setOneOptionSet might have some bugs in it in Auto class
 //        Also setOneOptionSetOption might have some bugs in Auto class
+
+        FileOutputStream fileOut = new FileOutputStream("AutoFord.ser");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(Ford);
+        out.close();
+        fileOut.close();
+
+        System.out.println("Info saved");
+
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("AutoFord.ser"));
+        Auto Ford2 = (Auto) in.readObject();
+        System.out.println("Here:");
+        System.out.println(Ford2);
+        System.out.println(Ford2.getName());
 
     }
 }
