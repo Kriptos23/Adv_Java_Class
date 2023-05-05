@@ -3,6 +3,7 @@ package Model;
 import java.io.IOException;
 import java.io.*;
 import java.util.Arrays;
+import Util.FileIO.*;
 
 
 public class Main implements Serializable
@@ -124,7 +125,7 @@ public class Main implements Serializable
 //        setOneOptionSet might have some bugs in it in Auto class
 //        Also setOneOptionSetOption might have some bugs in Auto class
 
-        FileOutputStream fileOut = new FileOutputStream("AutoFord.ser");
+        FileOutputStream fileOut = new FileOutputStream("AutoFord.txt  ");
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(Ford);
         out.close();
@@ -132,11 +133,14 @@ public class Main implements Serializable
 
         System.out.println("Info saved");
 
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("AutoFord.ser"));
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("AutoFord.txt"));
         Auto Ford2 = (Auto) in.readObject();
         System.out.println("Here:");
         System.out.println(Ford2);
         System.out.println(Ford2.getName());
+
+
+//        Auto toyota = buildAutoObject("toyota.txt");
 
     }
 }

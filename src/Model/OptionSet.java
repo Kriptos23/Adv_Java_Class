@@ -9,11 +9,11 @@ public class OptionSet implements Serializable
     private Options[] opt;
 
     //////// Constructors ////////////
-    OptionSet(){
+    public OptionSet(){
         this.OptionSetName = "";
         this.opt = new Options[0];
     }
-    OptionSet(String OptionSetName, int size)
+    public OptionSet(String OptionSetName, int size)
     {
         this.OptionSetName = OptionSetName;
         this.opt = new Options[size];
@@ -21,7 +21,7 @@ public class OptionSet implements Serializable
     }
 
     /////////////////Methods/////////
-    public void addOption(Options NewOpt)//aka build option
+    public void addOption(Options NewOpt)//aka buildOption
     {
         int length = this.opt.length;
         Options[] NewArr = new Options[length+1];//New bigger array
@@ -80,6 +80,26 @@ public class OptionSet implements Serializable
                 NewArr[i] = opt[i];
             }
             this.setOpt(NewArr);
+        }
+    }
+
+    public void UpdateOption(String oldName, String NewName, int NewPrice)
+    {
+        boolean found = false;
+        for (Options j : this.getOpt())
+        {
+            if (j.getOptName().equals(oldName))
+            {
+                j.setOptName(NewName);
+                j.setOptPrice(NewPrice);
+                System.out.println(oldName + " Option updated successfully");
+                found = true;
+            }
+        }
+
+        if (!found)
+        {
+            System.out.println("No such Option with that name");
         }
     }
 
@@ -277,17 +297,17 @@ public class OptionSet implements Serializable
 
 ///////////////////////////////////////New Inner Class/////////////////////////////////////////////////////////////////
 
-    protected class Options implements Serializable
+    public class Options implements Serializable
     {
         private String OptName;
         private double OptPrice;
         private static int size; //not used
 
         //////// Constructors ////////////
-        Options()
+        public Options()
         {
         }
-        Options (String OptName, double OptPrice)
+        public Options (String OptName, double OptPrice)
         {
             this.OptName = OptName;
             this.OptPrice = OptPrice;

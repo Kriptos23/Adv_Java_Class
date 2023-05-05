@@ -1,5 +1,6 @@
 package Model;
 
+import javax.swing.text.html.Option;
 import java.io.*;
 import java.util.Arrays;
 
@@ -9,15 +10,16 @@ public class Auto implements Serializable
     private double basePrice;
     private OptionSet[] optS;
 
-    Auto(String name, double basePrice, int size) throws IOException {
+    public Auto(String name, double basePrice, int size) throws IOException {
         this.name = name;
         this.basePrice = basePrice;
-        if(size == 0){
-            this.optS = null;
-        }
-        else {
-            this.optS = new OptionSet[size];
-        }
+        this.optS = new OptionSet[size];
+//        if(size == 0){
+//            this.optS = null;
+//        }
+//        else {
+//            this.optS = new OptionSet[size];
+//        }
 
     }
 
@@ -40,6 +42,26 @@ public class Auto implements Serializable
 //    }
 //            OptionSet color = Ford.FindSet("color");
 //            OptionSet color = Ford.FindColorOptionSet();
+
+    public void addOptionSet(String name) {
+        OptionSet newOptionSet = new OptionSet(name, 0);
+
+        int optS_length = this.optS.length;
+        if( optS_length == 0) {
+            OptionSet[] new_optS = new OptionSet[1];
+            new_optS[0] = newOptionSet;
+            this.setOptS(new_optS);
+        }
+        else{
+
+            OptionSet[] new_optS = new OptionSet[optS_length+1];
+            for( int i=0; i<optS_length; i++) {
+                new_optS[i] = this.optS[i];
+            }
+            new_optS[optS_length] = newOptionSet;
+            this.setOptS(new_optS);
+        }
+    }
 
     public OptionSet FindSet(String name)
     {
@@ -164,26 +186,37 @@ public class Auto implements Serializable
         System.out.println("No such OptionSet with the name "  + name);
     }
 
-    public void UpdateOption(String name, String NewName, int NewPrice)
+    // updates Option, when no OptionSet name is given. Looks in all OptionSets, and all Options
+
+    public void UpdateOption(String OptionSetName,String oldName, String NewName, int NewPrice)
     {
         boolean found = false;
         for (OptionSet i : this.getOptS())
         {
-            for (OptionSet.Options j : i.getOpt())
+            if (i.getOptionSetName().equals(OptionSetName))
             {
-                if (j.getOptName().equals(name))
-                {
-                    j.setOptName(NewName);
-                    j.setOptPrice(NewPrice);
-                    System.out.println(name + " Option updated successfully");
-                    found = true;
-                }
+                i.UpdateOption(oldName, NewName, NewPrice);
             }
         }
         if (!found)
         {
             System.out.println("No such Option with that name");
         }
+    }
+    // Might have bugs
+    public void addOption(String optionSetName, String optionName, double optionPrice)//aka build option
+    {
+        // 1. find the OptionSet with SetName:
+        for(OptionSet i : this.getOptS())
+        {
+            if (i.getOptionSetName().equals(optionSetName))
+            {
+                i.addOption(optionSetName, optionName, optionPrice);
+            }
+        }
+
+        // 2. use addOption() method of OptionSet found in 1. step
+
     }
 ////////////////// PRINT FUNCTIONS ////////////////////////////////////////////////////////////////////////////////////
 
@@ -453,5 +486,6 @@ public class Auto implements Serializable
         }
         System.out.println("No such OptionSet with the name "  + name);
     }
+//    public void setOptArr
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
