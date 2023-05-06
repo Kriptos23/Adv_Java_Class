@@ -102,6 +102,25 @@ public class OptionSet implements Serializable
             System.out.println("No such Option with that name");
         }
     }
+    public void UpdateOptionWithoutMessage(String oldName, String NewName, int NewPrice)
+    {
+        boolean found = false;
+        for (Options j : this.getOpt())
+        {
+            if (j.getOptName().equals(oldName))
+            {
+                j.setOptName(NewName);
+                j.setOptPrice(NewPrice);
+//                System.out.println(oldName + " Option updated successfully"); //Commented this since I don;t want this line
+                found = true;
+            }
+        }
+
+        if (!found)
+        {
+            System.out.println("No such Option with that name");
+        }
+    }
 
     protected void printOneOption(int x)
     {

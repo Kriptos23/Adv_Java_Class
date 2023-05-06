@@ -3,17 +3,56 @@ package Model;
 import java.io.IOException;
 import java.io.*;
 import java.util.Arrays;
+
+import Util.FileIO;
 import Util.FileIO.*;
 
 
 public class Main implements Serializable
 {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException
+    {
+        //My testing that I was doing during the code writing, includes in itself more detailed testing of
+        //Option/OptionSet/Auto class methods
+
+//        myTestingMethod(); //UNCOMMENT ME if you wanna see more detailed testing
+
+        System.out.println("Method test");
+        System.out.println();
+        Auto car_1 = null;
+        FileIO test = new FileIO();
+        //Build Automobile Object from a file.
+        System.out.println("Print B4 serialization: ");
+        car_1 = test.buildAutoObject("Car.txt", car_1);//method also prints the object
+        System.out.println();
+        //Print attributes before serialization
+
+        //Serialize the object
+        System.out.println("Serialization process: ");
+        FileOutputStream fileOut = new FileOutputStream("CarSerialization.txt");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(car_1);
+        out.close();
+        fileOut.close();
+        System.out.println("Info saved :)");
+        System.out.println();
+
+        //Deserialize the object and read it into memory.
+        System.out.println("Deserialization process");
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("CarSerialization.txt"));
+        Auto Ford2 = (Auto) in.readObject();
+        //Print new attributes.
+        System.out.println("\nAfter Serialization/Deserialization Print:");
+        System.out.println(Ford2);
+
+    }
+
+
+    public static void myTestingMethod() throws IOException, ClassNotFoundException
+    {
+
         System.out.println("Thank you for deciding to buy Ford's Focus Wagon ZTW \nYou have following options " +
                 "for your car:");
-
-
-
         OptionSet color = new OptionSet("Colors", 0);
         OptionSet.Options[] colors_arr = new OptionSet.Options[3];
         colors_arr[0] = color.new Options("Blue", 0.0);
@@ -60,7 +99,7 @@ public class Main implements Serializable
 
 
 
-    // Testing find()
+        // Testing find()
         OptionSet a1;
         OptionSet.Options b;
 
@@ -73,14 +112,14 @@ public class Main implements Serializable
 
 
 
-    // Testing delete()
+        // Testing delete()
 //        Ford.DeleteOption("Red");
 //        b = Ford.FindOption("Red");
 //
 //        Ford.UpdateOption("Deleted", "Red", 0);
 //        Ford.FindOption("Red");
 
-    // Testing add and delete for OptionSet
+        // Testing add and delete for OptionSet
         OptionSet.Options orange = color.new Options("Orange", 0.0);
         System.out.println("Before");
         System.out.println(Arrays.toString(color.getOpt()));
@@ -124,23 +163,6 @@ public class Main implements Serializable
 
 //        setOneOptionSet might have some bugs in it in Auto class
 //        Also setOneOptionSetOption might have some bugs in Auto class
-
-        FileOutputStream fileOut = new FileOutputStream("AutoFord.txt  ");
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(Ford);
-        out.close();
-        fileOut.close();
-
-        System.out.println("Info saved");
-
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("AutoFord.txt"));
-        Auto Ford2 = (Auto) in.readObject();
-        System.out.println("Here:");
-        System.out.println(Ford2);
-        System.out.println(Ford2.getName());
-
-
-//        Auto toyota = buildAutoObject("toyota.txt");
-
     }
+
 }

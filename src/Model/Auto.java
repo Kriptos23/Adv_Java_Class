@@ -196,13 +196,31 @@ public class Auto implements Serializable
             if (i.getOptionSetName().equals(OptionSetName))
             {
                 i.UpdateOption(oldName, NewName, NewPrice);
+                found = true;
             }
         }
         if (!found)
         {
-            System.out.println("No such Option with that name");
+            System.out.println("No such Option with the name" + oldName);
         }
     }
+    public void UpdateOptionWithoutMessage(String OptionSetName,String oldName, String NewName, int NewPrice)
+    {
+        boolean found = false;
+        for (OptionSet i : this.getOptS())
+        {
+            if (i.getOptionSetName().equals(OptionSetName))
+            {
+                i.UpdateOptionWithoutMessage(oldName, NewName, NewPrice);
+                found = true;
+            }
+        }
+        if (!found)
+        {
+            System.out.println("No such Option with the name" + oldName);
+        }
+    }
+
     // Might have bugs
     public void addOption(String optionSetName, String optionName, double optionPrice)//aka build option
     {
